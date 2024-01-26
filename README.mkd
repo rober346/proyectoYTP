@@ -1,0 +1,81 @@
+
+## INDICACIONES PARA EL DESARROLLO DE LA APLICACION PARA LA CONTABILIDAD DE LA DECLARACION SEMESTRAL
+
+---
+
+### CONSIDERAR POR CADA MES:
+* Fondos agregados (abono) -- ✅
+* Comisiones (en negativo) -- ✅
+* Pago (Interes Nominal, un dato general) -- ✅
+* Retiro (en negativo) -- ✅
+
+---
+
+### Formula para el calculo de saldo diario:
+
+> Saldo diario = Abono + Interes nominal + Comisiones + Retiro -- ⏱ (pendiente)
+
+> Saldo diario (acumulado para todos los dias) = saldo del dia anterior (Abono + Interes + Comisiones + Retiro) + saldo del dia actual -- ⏱
+
+### Datos que se deben obtener como funciones separadas para llevar a cabo otras operaciones: 
+
+> suma total de abonos -- ✅
+
+> suma total de las Comisiones -- ✅
+
+> suma total de interes nominal <--- DATO PARA DECLARACION ⏱ (pendiente)
+
+> suma total de retiros -- ✅
+
+> saldo promedio diario (final) = promedio de los saldos diarios de todo el semestre -- ⏱ (pendiente)
+
+---
+
+### AJUSTE POR INFLACION
+
+#### Datos:
+* suma total de Interes Nominal -- ✅
+* INPC de incio de inversion -- ✅
+* INPC de final de inversion -- ✅
+
+### Formula para el calculo del Factor de Inflacion:
+> Factor de Inflacion = ( INPC mas reciente / INPC  del primer periodo) - 1 -- ✅
+
+#### Siendo este caso, el resultado debe ser de 4 decimales:
+> Factor de Inflacion  = ( INPC de final de inversion / INPC de incio de inversion ) - 1
+
+> Saldo promedio diario (final) -- ⏱ (pendiente)
+
+### Formula para el Ajuste por Inflacion:
+> Ajuste por Inflacion = Factor de Inflacion * saldo promedio diario -- ⏱ (pendiente)
+
+### Formula para el Interes Real:
+> Interes Real = interes nominal - ajuste por inflacion -- ⏱ (pendiente)
+
+---
+
+### CALCULO ISR SEMESTRAL -- ⏱ (pendiente)
+#### Datos: 
+* INTERES REAL 
+
+* LIMITE INFERIOR = obtener del diario oficial (en pagina del sat) = (=0.01) -- pag 15 de RESOLUCIÓN Miscelánea Fiscal para 2023
+* > Excedente sobre limite inferior = interes real - limite inferior -- ⏱ (pendiente)
+
+* Tasa (% para aplicarse sobre el excedente del límite inferior) =  obtener del diario oficial (en pagina del sat) = (1.92)
+
+* > Impuesto Marginal = excedente limite inferior * Tasa -- ⏱ (pendiente)
+
+* Cuota fija = obtener del diario oficial (en pagina del sat) = (0.00)
+* ISR a cargo = Impuesto Marginal + cuota fija -- ⏱ (pendiente)
+
+
+---
+### DATOS PARA DECLARACION SEMESTRAL
+
+* suma total de interes nominal
+* > Deducciones autorizadas = Interes nominal - interes real
+* Base gravable del pago provisional = interes real
+* Impuesto conforme a tarifa = ISR a cargo
+
+_NOTA: Al momento de hacer la declaracion en la pagina del SAT por ultimo el resto de casillas va en ceros, click en siguiente y enviar ...._
+
