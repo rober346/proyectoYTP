@@ -1,6 +1,10 @@
 
 ## INDICACIONES PARA EL DESARROLLO DE LA APLICACION PARA LA CONTABILIDAD DE LA DECLARACION SEMESTRAL
 
+Link:
+
+[Declaración semestral ISR 2023 "YO TE PRESTO" | régimen de los demás ingresos| INTERESES](https://www.youtube.com/watch?v=DLElodyGr_4&list=PLIic1hUQMqHMq6z6hC8uAlyapVLlz5cUH&index=10)
+
 ---
 
 ### CONSIDERAR POR CADA MES:
@@ -79,3 +83,9 @@
 
 _NOTA: Al momento de hacer la declaracion en la pagina del SAT por ultimo el resto de casillas va en ceros, click en siguiente y enviar ...._
 
+
+## INDICACIONES PARA EL DESARROLLO DE LA APLICACION PARA LA CONTABILIDAD DE LA DECLARACION MENSUAL
+
+Link:
+
+[YO TE PRESTO factura y declaración mensual 2023| Intereses e Impuestos| FINTECH](https://www.youtube.com/watch?v=t-mJgYEQoyw&list=PLIic1hUQMqHMq6z6hC8uAlyapVLlz5cUH&index=9)
