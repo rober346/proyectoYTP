@@ -1,41 +1,41 @@
 import fitz
 import re
-# LECTURA DEL ESTADO DE CUENTA EN PDF
+# READING THE STATEMENT OF ACCOUNT IN PDF
 
-# Abrir el documento PDF
+# Open the PDF
 doc = fitz.open("efaa312e00e67c18969cfbab164e7e4b.pdf")
 
-# Lista para almacenar los datos finales
+# List for storing final data
 datos_finales_lista = []
 
-# Iterar sobre cada página del documento
+# Iterate on each document page
 for page_num in range(doc.page_count):
     page = doc[page_num]
 
-    # Obtener el texto de la página
+    # Get page text
     text = page.get_text()
     print(text)
     print(type(text))
 
-    # Definir patrones con expresiones regulares más flexibles
+    # Define patterns with more flexible regular expressions
     patron_intereses = re.compile(r"Intereses[^\d]*([\d,]+[.\d]+)")
     # patron_iva = re.compile(r"IVA de Intereses[^\d]*([\d,]+[.\d]+)")
     patron_comisiones = re.compile(r"Comisión[^\d]*([\d,]+[.\d]+)") # VERIFICAR
     # patron_iva_comision = re.compile(r"IVA Comisión[^\d]*([\d,]+[.\d]+)")
 
-    # Buscar coincidencias con los patrones
+    # Search for matches with patterns
     match_intereses = patron_intereses.findall(text)
     # match_iva = patron_iva.search(text)
     match_comisiones = patron_comisiones.findall(text)
     # match_iva_comision = patron_iva_comision.search(text)
 
-    # Depuración: Imprimir el texto de la página y los resultados de las expresiones regulares
+    # Debugging: Print page text and regular expression results
     # print(f"Texto de la página {page_num + 1}:\n{text}")
     print(f"Match Intereses: {match_intereses}")
     # print(f"Match IVA: {match_iva}")
     print(f"Comisiones: {match_comisiones}")
 
-    # Procesar el monto de intereses
+    # Process the interest amount
     if match_intereses:
         monto_intereses = float(match_intereses[1].replace(",", ""))
     else:
@@ -56,7 +56,7 @@ for page_num in range(doc.page_count):
     else:
         monto_iva_interes_moratorio = 0.0
     
-    # Procesar el monto de comisiones
+    # Process the commission amount
     if match_comisiones:
         monto_comision = float(match_comisiones[1].replace(",", ""))
     else:
@@ -68,19 +68,19 @@ for page_num in range(doc.page_count):
         monto_iva_comisiones = 0.0
     
     '''
-    # Procesar el monto de IVA de comisiones
+    # Process the amount of IVA commissions
     if match_iva_comision:
         monto_iva_comision = float(match_iva_comision.group(1).replace(",", ""))
     else:
         monto_iva_comision = 0.0
     '''
 
-    # Almacenar los datos finales en un diccionario
+    # Storing final data in a dictionary
     datos_finales = {
         'intereses': monto_intereses,
         'IVA de interes': monto_iva_intereses,
     
-        # **** TO DO (confirmar pago intereses moratorios) ****
+        # **** TO DO (confirm payment intereses moratorios) ****
         #'Intereses moratorios': monto_intereses_moratorios,
         #'IVA de intereses moratorios': monto_iva_interes_moratorio,
         
@@ -90,6 +90,6 @@ for page_num in range(doc.page_count):
         }
     datos_finales_lista.append(datos_finales)
 
-# Imprimir los datos finales
+# Print final data:
 for datos in datos_finales_lista:
     print(datos)

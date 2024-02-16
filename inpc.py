@@ -5,12 +5,12 @@ def busca_inpc():
     from selenium.webdriver.common.by import By
     from time import sleep
 
-    # Inicializar el navegador
+    # Initialize the browser
     driver = webdriver.Chrome()
     driver.get('https://www.elcontribuyente.mx/inpc/')
     driver.maximize_window()
 
-    # Encontrar la tabla por su ID (reemplaza 'miTabla' con el ID de tu tabla)
+    # Find the table and rows
     tabla = WebDriverWait(driver,55).until(
         EC.presence_of_element_located((By.XPATH, '//table[@class="tableizer-table"]/tbody[1]/tr[1]/td[2]'))
     )
@@ -31,57 +31,20 @@ def busca_inpc():
         'inpc2': inpc_final
     } 
 
-    ''' +
-    # Obtener la primera fila de la tabla
-    primera_fila = tabla.find_element(By.TAG_NAME, 'tr')
-    print(primera_fila)
-    print("-------------")
+results_inpc = busca_inpc()
+inpc1 = results_inpc['inpc1']
+inpc2 = results_inpc['inpc2']
 
-    # Obtener las celdas de la primera fila
-    celdas = primera_fila.find_elements(By.TAG_NAME, 'td')
-    print(celdas)
+# ***** Sending values to Database: *****
+from DB_YTP import conector_DBYTP
 
-    # Obtener los datos de la primera y sexta columna
-    primer_dato = celdas[1].text  # Datos de la primera columna
-    sexto_dato = celdas[6].text   # Datos de la sexta columna
+connecting = conector_DBYTP.connect()
+database = connecting[0]
+cursor = connecting[1]
 
-    # Imprimir los datos
-    print("Datos de la primera columna:", primer_dato)
-    print("Datos de la sexta columna:", sexto_dato)
-    '''
+sql = "INSERT INTO inpc VALUES(null, %s, %s, NOW())"
+value = (inpc1, inpc2)
 
+cursor.execute(sql, value)
 
-
-'''
-def busca_inpc():
-    from selenium import webdriver
-    from selenium.webdriver.common.by import By
-    from time import sleep
-
-    # Inicializar el navegador
-    driver = webdriver.Chrome()
-    driver.get('https://www.elcontribuyente.mx/inpc/')
-
-    driver.execute_script("window.scrollTo(0,300)")
-    sleep(2)
-
-    # Encontrar la tabla por su ID (reemplaza 'miTabla' con el ID de tu tabla)
-    tabla = driver.find_element(By.ID, 'tableizer-table')
-
-    # Obtener la primera fila de la tabla
-    primera_fila = tabla.find_element(By.TAG_NAME, 'tr')
-    print(primera_fila)
-    print("-------------")
-
-    # Obtener las celdas de la primera fila
-    celdas = primera_fila.find_elements(By.TAG_NAME, 'td')
-    print(celdas)
-
-    # Obtener los datos de la primera y sexta columna
-    primer_dato = celdas[1].text  # Datos de la primera columna
-    sexto_dato = celdas[6].text   # Datos de la sexta columna
-
-    # Imprimir los datos
-    print("Datos de la primera columna:", primer_dato)
-    print("Datos de la sexta columna:", sexto_dato)
-'''
+database.commit()

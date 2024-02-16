@@ -19,6 +19,6 @@ def lecturacsv_abonos():
     print("----------------------------------------")
     print(f"Suma total acumulada de Abonos: {suma_total_acumulado}")
     print("----------------------------------------")
-           
+
 
 lecturacsv_abonos()

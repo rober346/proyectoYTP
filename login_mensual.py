@@ -8,7 +8,7 @@ from time import sleep
 import datetime
 
 opts = Options()
-# Determinar cual es el argumento al instanciar options
+# Determine which is the argument when instantiating options
 opts.add_experimental_option("detach", True)
 
 #driver = webdriver.Chrome("./chromedriver.exe", chrome_options=opts)
@@ -23,10 +23,11 @@ input_user = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//input[@name="email"]'))
 )
 input_user = driver.find_element(By.XPATH, '//input[@name="email"]')
-# Introduce el nombre de usuario:
+
+# Enter the username:
 input_user.send_keys(user)
 
-# Click boton "siguiente" de usuario:
+# Click button "siguiente" from username:
 boton = driver.find_element(By.XPATH, '//button[@data-testid="email-submit"]')
 boton.click()
 
@@ -35,10 +36,11 @@ input_pass = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//input[@name="password"]'))
 )
 input_pass = driver.find_element(By.XPATH, '//input[@name="password"]')
-# Introduce el password:
+
+# Enter the password:
 input_pass.send_keys(password)
 
-# Click boton "siguiente" del password
+# Click button "siguiente" from password
 boton = driver.find_element(By.XPATH, '//button[@data-testid="password-submit"]')
 boton.click()
 
@@ -102,7 +104,8 @@ input_pass = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//input[@data-testid="password-field-input"]'))
 )
 input_pass = driver.find_element(By.XPATH, '//input[@data-testid="password-field-input"]')
-# Introduce el password:
+
+# Enter the password:
 input_pass.send_keys(password)
 
 boton = WebDriverWait(driver,20).until(

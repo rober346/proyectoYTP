@@ -11,7 +11,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 #from inpc import busca_inpc
 
 opts = Options()
-# Determinar cual es el argumento al instanciar options
+#  Determine which is the argument when instantiating options
 opts.add_experimental_option("detach", True)
 
 #driver = webdriver.Chrome("./chromedriver.exe", chrome_options=opts)
@@ -29,10 +29,11 @@ input_user = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//input[@name="email"]'))
 )
 input_user = driver.find_element(By.XPATH, '//input[@name="email"]')
-# Introduce el nombre de usuario:
+
+# Enter the username:
 input_user.send_keys(user)
 
-# Click boton "siguiente" de usuario:
+# Click button "siguiente" from username:
 boton = driver.find_element(By.XPATH, '//button[@data-testid="email-submit"]')
 boton.click()
 
@@ -41,16 +42,15 @@ input_pass = WebDriverWait(driver,20).until(
 )
 input_pass = driver.find_element(By.XPATH, '//input[@name="password"]')
 
-# Introduce el password:
+# Enter the password:
 input_pass.send_keys(password)
 
-# Click boton "siguiente" del password
+# Click button "siguiente" from password
 boton = driver.find_element(By.XPATH, '//button[@data-testid="password-submit"]')
 boton.click()
 
 #driver.get('https://investor.yotepresto.com/dashboard')
 # -------------------------------------------------------------------
-
 
 boton = WebDriverWait(driver, 20).until(
     EC.visibility_of_element_located((By.XPATH, '//div[@data-testid="Mis movimientos"]'))
@@ -58,25 +58,15 @@ boton = WebDriverWait(driver, 20).until(
 boton = driver.find_element(By.XPATH, '//div[@data-testid="Mis movimientos"]')
 boton.click()
 
-'''
-# Usar boton flitrar para ventana no maximizada
-# !! CAMBIAR XPATH A RUTA RELATIVA
 
-boton_filtrar = WebDriverWait(driver,20).until(
-    EC.presence_of_element_located((By.XPATH, '//*[@id="contentArea"]/div/div[2]/div[1]/div/button[1]'))
-)
-boton_filtrar = driver.find_element(By.XPATH, '//*[@id="contentArea"]/div/div[2]/div[1]/div/button[1]')
-boton_filtrar.click()
-'''
-
-# Obtener fechas del primer semestre:
+# Get dates for the first semester:
 fecha_completa = datetime.date.today()
 fecha_personalizada_año = fecha_completa.strftime("%Y")
 fecha_inicial = "01/01/2023"
 fecha_final = "06/30/2023"
 
 
-# Introducir fecha inicial:
+# Enter initial date:
 input_fecha_inicio = WebDriverWait(driver, 20).until(
     EC.presence_of_element_located((By.XPATH, '//input[@name="min_date"]'))
 )
@@ -85,7 +75,7 @@ input_fecha_inicio.click()
 input_fecha_inicio.send_keys(fecha_inicial)
 
 
-# Introducir fecha final:
+# Enter end date:
 input_fecha_final = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//input[@name="max_date"]'))
 )
@@ -94,13 +84,13 @@ input_fecha_final.click()
 input_fecha_final.send_keys(fecha_final)
 
 
-# ---- SIMULACION DE CLIC EN AREA VACÍA PARA CONTINUAR ---------------
+# ---- SIMULATION CLICK ON EMPTY AREA TO CONTINUE ---------------
 
-# Elemento que representa el área "vacía" de la página
+# Element representing the "empty" area of the page:
 area_vacia = driver.find_element(By.XPATH, '//p[@class="titleFilter"]')
-# Instancia de ActionChains
+# Instance of ActionChains
 actions = ActionChains(driver)
-# Simula un clic en el área vacía
+# Simulates a click in the empty area
 actions.click(area_vacia).perform()
 # -------------------------------------------------------------------
 
@@ -109,14 +99,14 @@ actions.click(area_vacia).perform()
 # Comision (Importe)
 # ----------------------------------------------------------------------------------------------------
 
-# Selecciona Comision
+# Select Comision
 boton = WebDriverWait(driver, 20).until(
     EC.visibility_of_element_located((By.XPATH, '//option[@value="Comisión"]'))
 )
 boton = driver.find_element(By.XPATH, '//option[@value="Comisión"]')
 boton.click()
 
-# clic en boton azul de filtrar 
+# click on the blue filter button 
 boton_filtrar = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//button[@type="submit"][contains(.,"Filtrar")]'))
 )
@@ -124,28 +114,28 @@ boton_filtrar = driver.find_element(By.XPATH, '//button[@type="submit"][contains
 boton_filtrar.click()
 
 
-# Identificar el boton de ultima pagina
+# Identify the last page button
 boton_siguiente = WebDriverWait(driver, 20).until(
             EC.visibility_of_element_located((By.XPATH, '//div[contains(text(), ">>")]')))
 boton_siguiente.click()
 sleep(10)
 
-# localiza la clase padre
+# Locates the parent class
 pagination_list = WebDriverWait(driver, 20).until(
     EC.visibility_of_element_located((By.CLASS_NAME, "paginationList"))
 )
 
-# Encuentra el numero de hijos y guarda en variable
+# Finds the number of children and stores in variable
 num_children = len(pagination_list.find_elements(By.XPATH, "./*"))
 children = pagination_list.find_elements(By.XPATH, "./*")
 print(num_children)
 
-# Imprime la ultima posicion de los hijos
+# Prints the last position of the children
 print(children[-1].text)
 num = children[-1].text
 
 
-# Recorrer todas las pestañas:
+# Scroll through all tabs:
 
 for i in range (1, int(num)):
     
@@ -156,7 +146,7 @@ for i in range (1, int(num)):
     
 
     try:
-        # clic boton siguiente (inverso)
+        # click next button (reverse)
         boton_siguiente = WebDriverWait(driver, 6).until(
                     EC.visibility_of_element_located((By.XPATH, '(//div[contains(.,"<")])[10]')))
         boton_siguiente.click()
@@ -168,19 +158,8 @@ for i in range (1, int(num)):
         break
 
 
-'''
-# Boton de filtrado para pantalla no maximizada
-
-boton_filtrar = WebDriverWait(driver,20).until(
-    EC.presence_of_element_located((By.XPATH, '//button[@type="button"][contains(.,"Created with sketchtool.Filtrar")]'))
-)
-boton_filtrar = driver.find_element(By.XPATH, '//button[@type="button"][contains(.,"Created with sketchtool.Filtrar")]')
-boton_filtrar.click()
-'''
-
-
 # ----------------------------------------------------------------------------------------------------
-# Selecciona Pago (Intereses Nominal)
+# Select Pago (Intereses Nominal)
 # ----------------------------------------------------------------------------------------------------
 
 boton = WebDriverWait(driver, 20).until(
@@ -189,22 +168,22 @@ boton = WebDriverWait(driver, 20).until(
 boton = driver.find_element(By.XPATH, '//option[@value="Pago"]')
 boton.click()
 
-# clic en boton azul de filtrar 
+# click on the blue filter button 
 boton_filtrar = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//button[@type="submit"][contains(.,"Filtrar")]'))
 )
 boton_filtrar = driver.find_element(By.XPATH, '//button[@type="submit"][contains(.,"Filtrar")]')
 boton_filtrar.click()
 
-# Esperar a que el elemento esté presente en el DOM
+# Waiting for the element to be present in the DOM
 elemento_intereses = WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.XPATH, '//div[@class="info-widget__category"][contains(text(),"Intereses")]/following-sibling::div[@class="info-widget__data"]'))
 )
 
-# Obtener el texto del elemento y guardarlo en una lista
+# Get the text of the element and save it in a list
 lista_intereses = [elemento_intereses.text]
 
-# Imprimir la lista (puedes hacer lo que quieras con ella)
+# Print the list
 print(lista_intereses)
 # ----------------------------------------------------------------------------------------------------
 
@@ -212,7 +191,7 @@ print(lista_intereses)
 # ----------------------------------------------------------------------------------------------------
 # Retiro
 # ----------------------------------------------------------------------------------------------------
-# Selecciona Retiro
+# Select Retiro
 boton = WebDriverWait(driver, 20).until(
     EC.visibility_of_element_located((By.XPATH, '//option[@value="Retiro"]'))
 )
@@ -220,7 +199,7 @@ boton = driver.find_element(By.XPATH, '//option[@value="Retiro"]')
 boton.click()
 
 
-# clic en boton azul de filtrar 
+# click on the blue filter button
 boton_filtrar = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//button[@type="submit"][contains(.,"Filtrar")]'))
 )
@@ -228,7 +207,7 @@ boton_filtrar = driver.find_element(By.XPATH, '//button[@type="submit"][contains
 boton_filtrar.click()
 
 
-# Clic boton descargar excel
+# Click on the download excel button
 boton_descargar = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//*[@id="Layer_1"]'))
 )
@@ -245,7 +224,7 @@ sleep(2)
 fecha_inicial_abono = "01/01/2020"
 fecha_final_abono = "06/30/2023"
 
-# Introducir fecha inicial:
+# Enter initial date:
 input_fecha_inicio = WebDriverWait(driver, 20).until(
     EC.presence_of_element_located((By.XPATH, '//input[@name="min_date"]'))
 )
@@ -260,7 +239,7 @@ sleep(2)
 input_fecha_inicio.send_keys(fecha_inicial_abono)
 sleep(3)
 
-# Introducir fecha final:
+# Enter end date:
 input_fecha_final = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//input[@name="max_date"]'))
 )
@@ -275,23 +254,23 @@ sleep(2)
 input_fecha_final.send_keys(fecha_final_abono)
 sleep(3)
 
-# Selecciona Fondos Agregados
+# Select Fondos Agregados
 boton = WebDriverWait(driver, 20).until(
     EC.visibility_of_element_located((By.XPATH, '//option[@value="Abono"]'))
 )
 boton = driver.find_element(By.XPATH, '//option[@value="Abono"]')
 boton.click()
 
-# ---- SIMULACION DE CLIC EN AREA VACÍA PARA CONTINUAR ---------------
-# Elemento que representa el área "vacía" de la página
+# ---- SIMULATION CLICK ON EMPTY AREA TO CONTINUE ---------------
+# Element representing the "empty" area of the page:
 area_vacia = driver.find_element(By.XPATH, '//p[@class="titleFilter"]')
-# Instancia de ActionChains
+# Instance de ActionChains:
 actions = ActionChains(driver)
-# Simula un clic en el área vacía
+# Simulates a click in the empty area
 actions.click(area_vacia).perform()
 # -------------------------------------------------------------------
 
-# clic en boton azul de filtrar 
+# click on the blue filter button 
 boton_filtrar = WebDriverWait(driver,20).until(
     EC.presence_of_element_located((By.XPATH, '//button[@type="submit"][contains(.,"Filtrar")]'))
 )
@@ -299,266 +278,14 @@ boton_filtrar = driver.find_element(By.XPATH, '//button[@type="submit"][contains
 boton_filtrar.click()
 
 
-# Clic boton descargar excel
+# Click on the download excel button
 botoncsv = WebDriverWait(driver, 20).until(
     EC.visibility_of_element_located((By.XPATH, '//*[@id="Layer_1"]'))
 )
 #botoncsv = driver.find_element(By.XPATH, '//*[@id="Layer_1"]')
 botoncsv.click()
 
-
 # busca_inpc()
-
-'''
-//*[@id="Layer_1"]
-boton_siguiente_archivo = WebDriverWait(driver, 30).until(
-            EC.visibility_of_element_located((By.XPATH, '//svg[@id="Layer_1"]')))
-boton_siguiente_archivo.click()
-'''
-# ----------------------------------------------------------------------------------------------------
-
-'''
-while True:
-    # Extract data from the page
-    # ...
-    try:
-        boton_siguiente = WebDriverWait(driver, 20).until(
-                    EC.visibility_of_element_located((By.XPATH, '//div[contains(text(), "<")]')))
-        boton_siguiente.click()
-        if boton_siguiente:
-            print("click")
-            boton_siguiente.click()
-            time.sleep(10)  # Wait for the page to load
-    except Exception as e:
-        print(f"Caught an exception of type: {type(e)}")
-        # If 'Next' button not found, exit the loop
-        break
-'''
-
-
-
-
-'''
----- BUCLE INFINITO ------
-
-boton_siguiente = WebDriverWait(driver, 20).until(
-    EC.visibility_of_element_located((By.XPATH, '//div[@class="controlGroup"]/div[last()]'))
-)
-boton_siguiente = driver.find_element(By.XPATH, '//div[@class="controlGroup"]/div[last()]')
-
-print(boton_siguiente.id)
-print(boton_siguiente)
-
-while boton_siguiente.id != 1:
-
-    # Haz clic en el elemento "Siguiente"
-    boton_siguiente.click()
-
-    # Encuentra el elemento "Siguiente" en la nueva página
-    boton_siguiente = WebDriverWait(driver, 20).until(
-        EC.visibility_of_element_located((By.XPATH, '//div[@class="controlGroup"]/div[last()]'))
-    )
-    boton_siguiente = driver.find_element(By.XPATH, "//div[@class='controlGroup']/div[last()]")
-
-    # Si se encuentra el elemento con el ID 1, se sale del bucle
-    if boton_siguiente.id == 1:
-        break
-#------------------------
-'''
-
-
-
-'''
-
-boton_siguiente = WebDriverWait(driver, 20).until(
-    EC.presence_of_element_located((By.XPATH, '//div[contains(text(), "&gt;") and not(contains(text(), "&gt;&gt;"))]'))
-)
-boton_siguiente = driver.find_element(By.XPATH, '//div[contains(text(), "&gt;") and not(contains(text(), "&gt;&gt;"))]')
-
-
-
-while boton_siguiente:
-
-    # Haz clic en el elemento "Siguiente"
-    boton_siguiente.click()
-
-    # Encuentra el elemento "Siguiente" en la nueva página
-    boton_siguiente = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.XPATH, '//div[contains(text(), "&gt;") and not(contains(text(), "&gt;&gt;"))]'))
-    )
-    boton_siguiente = driver.find_element(By.XPATH, '//div[contains(text(), "&gt;") and not(contains(text(), "&gt;&gt;"))]')
-
-
-
-
-while contador_pagina <= total_paginas:
-
-    # Haz clic en el elemento "Siguiente"
-    boton_siguiente.click()
-
-    # Esperar a que se cargue completamente la nueva página antes de continuar
-    WebDriverWait(driver, 10).until(EC.staleness_of(boton_siguiente))
-
-    # Encontrar el elemento "Siguiente" en la nueva página
-    boton_siguiente = WebDriverWait(driver, 20).until(
-        EC.visibility_of_element_located((By.XPATH, '//div[@class="controlGroup"]/div[last()]'))
-    )
-
-    # Incrementar el contador de página
-    contador_pagina += 1
-
-
-    
-    # Encuentra el elemento "Siguiente" en la nueva página
-    boton_siguiente = WebDriverWait(driver, 20).until(
-        EC.visibility_of_element_located((By.XPATH, '//div[@class="controlGroup"]/div[last()]'))
-    )
-    boton_siguiente = driver.find_element(By.XPATH, '//div[@class="controlGroup"]/div[last()]')
-    
-  
-
-
-
-boton_siguiente = WebDriverWait(driver, 20).until(
-        EC.visibility_of_element_located((By.XPATH, '//div[@class="controlGroup"]/div[last()]'))
-    )
-boton_siguiente = driver.find_element(By.XPATH, "//div[@class='controlGroup']/div[last()]")
-
-
-while boton_siguiente.id != 1:
-
-    # Haz clic en el elemento "Siguiente"
-    boton_siguiente.click()
-
-    # Encuentra el elemento "Siguiente" en la nueva página
-    boton_siguiente = WebDriverWait(driver, 20).until(
-        EC.visibility_of_element_located((By.XPATH, '//div[@class="controlGroup"]/div[last()]'))
-    )
-    # boton_siguiente = driver.find_element(By.XPATH, "//div[@class='controlGroup']/div[last()]")
-
-    # Si se encuentra el elemento con el ID 1, se sale del bucle
-    if boton_siguiente.id == 1:
-        break
-
-
-
-boton_siguiente = WebDriverWait(driver, 20).until(
-    EC.presence_of_element_located((By.XPATH, '//div[contains(text(), "&gt;") and not(contains(text(), "&gt;&gt;"))]'))
-)
-boton_siguiente = driver.find_element(By.XPATH, '//div[contains(text(), "&gt;") and not(contains(text(), "&gt;&gt;"))]')
-'''
-
-'''
-while boton_siguiente:
-
-    # Haz clic en el elemento "Siguiente"
-    boton_siguiente.click()
-
-    # Encuentra el elemento "Siguiente" en la nueva página
-    boton_siguiente = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.XPATH, '//div[contains(text(), "&gt;") and not(contains(text(), "&gt;&gt;"))]'))
-    )
-    boton_siguiente = driver.find_element(By.XPATH, '//div[contains(text(), "&gt;") and not(contains(text(), "&gt;&gt;"))]')
-'''
-
-# //div[text()="&gt;"]
-
-'''
-i = WebDriverWait(driver, 20).until(
-        EC.visibility_of_element_located((By.XPATH, '//div[@class="controlGroup"]/div[last()]'))
-    )
-i = = driver.find_element(By.XPATH, "//div[@class='controlGroup']/div[last()]")
-'''
-
-'''
-botoncsv = WebDriverWait(driver, 20).until(
-    EC.visibility_of_element_located((By.XPATH, '//button[@title="Descargar movimientos"]'))
-)
-botoncsv = driver.find_element(By.XPATH, '//button[@title="Descargar movimientos"]')
-botoncsv.click()
-'''
-
-'''
-# Extrayendo datos de las filas de la tabla:
-WebDriverWait(driver, 20).until(
-    EC.presence_of_element_located((By.TAG_NAME, 'tr'))
-)
-matches = driver.find_elements(By.TAG_NAME, 'tr')
-
-for match in matches:
-    print(match.text)
-'''
-
-
-
-
-
-'''
-boton = WebDriverWait(driver, 20).until(
-    EC.visibility_of_element_located((By.XPATH, '//span[text()="Ajustes"]'))
-)
-boton = driver.find_element(By.XPATH, '//span[text()="Ajustes"]')
-boton.click()
-
-
-boton = WebDriverWait(driver, 20).until(
-    EC.visibility_of_element_located((By.XPATH, '//a[text()="Estado de cuenta"]'))
-)
-boton = driver.find_element(By.XPATH, '//a[text()="Estado de cuenta"]')
-boton.click()
-
-
-boton = WebDriverWait(driver, 20).until(
-    EC.visibility_of_element_located((By.XPATH, '//select[@data-testid="month-field-input"]'))
-)
-boton = driver.find_element(By.XPATH, '//select[@data-testid="month-field-input"]')
-boton.click()
-
-"""
-boton = WebDriverWait(driver, 20).until(
-    EC.visibility_of_element_located((By.XPATH, '//option[@value="2520389"]'))
-)
-boton = driver.find_element(By.XPATH, '//option[@value="2520389"]')
-boton.click()
-"""
-
-fecha_personalizada_mes = int(input("Digite el numero de mes: "))
-
-meses={
-    1: "Enero",
-    2: "Febrero",
-    3: "Marzo",
-    4: "Abril",
-    5: "Junio",
-    7: "Julio",
-    8: "Agosto",
-    9: "Septiembre",
-    10: "Octubre",
-    11: "Noviembre",
-    12: "Diciembre"
-}
-# print(meses[fecha_personalizada_mes])
-
-boton = WebDriverWait(driver, 20).until(
-    EC.visibility_of_element_located((By.XPATH, f'//option[text()="{meses[fecha_personalizada_mes]} - {fecha_personalizada_año}"]'))
-)
-boton = driver.find_element(By.XPATH, f'//option[text()="{meses[fecha_personalizada_mes]} - {fecha_personalizada_año}"]')
-boton.click()
-
-
-input_pass = WebDriverWait(driver,20).until(
-    EC.presence_of_element_located((By.XPATH, '//input[@data-testid="password-field-input"]'))
-)
-input_pass = driver.find_element(By.XPATH, '//input[@data-testid="password-field-input"]')
-# Introduce el password:
-input_pass.send_keys(password)
-
-boton = WebDriverWait(driver,20).until(
-    EC.presence_of_element_located((By.XPATH, '//button[@data-testid="submit"]'))
-)
-boton = driver.find_element(By.XPATH, '//button[@data-testid="submit"]')
-boton.click()
-'''
 
 sleep(10)
 

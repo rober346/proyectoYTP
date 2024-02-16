@@ -19,7 +19,7 @@ Link:
 
 > Saldo diario = Abono + Interes nominal + Comisiones + Retiro -- ⏱ (pendiente)
 
-> Saldo diario (acumulado para todos los dias) = saldo del dia anterior (Abono + Interes + Comisiones + Retiro) + saldo del dia actual -- ⏱
+> Saldo diario (acumulado para todos los dias) = saldo del dia anterior (Abono + Interes + Comisiones + Retiro) + saldo del dia actual -- ✅
 
 ### Datos que se deben obtener como funciones separadas para llevar a cabo otras operaciones: 
 
