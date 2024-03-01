@@ -1,19 +1,23 @@
-import mysql.connector
+''' Program to print Final results '''
+
 from decimal import Decimal
+import mysql.connector
+
 
 database = mysql.connector.connect(
     host="192.168.52.247",
-    user="root", 
-    passwd=open("password_mysql.txt").readline().strip(), 
-    database="yotepresto", 
+    user="root",
+    passwd=open("password_mysql.txt", encoding="utf-8").readline().strip(),
+    database="yotepresto",
     port=33061
 )
+
 
 cursor = database.cursor()
 
 # ----- SUMA TOTAL INTERES NOMINAL -----------------
-sql = 'SELECT interes_nominal FROM isr_semestral'
-cursor.execute(sql)
+SQL = 'SELECT interes_nominal FROM isr_semestral'
+cursor.execute(SQL)
 results = cursor.fetchall()
 
 total_sum_interes = 0
@@ -27,13 +31,13 @@ print(f"Suma total de interes nominal: {total_sum_interes}")
 
 
 # ----- SUMA TOTAL ABONOS -----------------
-sql = 'SELECT abono FROM isr_semestral'
-cursor.execute(sql)
+SQL = 'SELECT abono FROM isr_semestral'
+cursor.execute(SQL)
 results = cursor.fetchall()
 
 total_sum_abonos = 0
 for tupla in results:
-    valor = tupla[0]  
+    valor = tupla[0]
     if valor is not None:
         total_sum_abonos += valor
 
@@ -41,13 +45,13 @@ print(f"Suma total de abonos: {total_sum_abonos}")
 
 
 # ----- SUMA TOTAL COMISIONES -----------------
-sql = 'SELECT comision FROM isr_semestral'
-cursor.execute(sql)
+SQL = 'SELECT comision FROM isr_semestral'
+cursor.execute(SQL)
 results = cursor.fetchall()
 
 total_sum_comisiones = 0
 for tupla in results:
-    valor = tupla[0]  
+    valor = tupla[0]
     if valor is not None:
         total_sum_comisiones += valor
 
@@ -55,30 +59,28 @@ print(f"Suma total comisiones: {total_sum_comisiones}")
 
 
 # ----- SUMA TOTAL RETIROS -----------------
-sql = 'SELECT retiro FROM isr_semestral'
-cursor.execute(sql)
+SQL = 'SELECT retiro FROM isr_semestral'
+cursor.execute(SQL)
 results = cursor.fetchall()
 
 total_sum_retiros = 0
 for tupla in results:
-    valor = tupla[0]  
+    valor = tupla[0]
     if valor is not None:
         total_sum_retiros += valor
 
 print(f"Suma total de retiros: {total_sum_retiros}")
 
 
-
 # ----- SALDO PROMEDIO DIARIO -----------------
-sql = 'SELECT suma_diaria FROM isr_semestral'
-cursor.execute(sql)
+SQL = 'SELECT suma_diaria FROM isr_semestral'
+cursor.execute(SQL)
 results = cursor.fetchall()
 
 total_sum_saldos = 0
-num_tuplas = len(results) 
-
+num_tuplas = len(results)
 for tupla in results:
-    valor = tupla[0]  
+    valor = tupla[0]
     if valor is not None:
         total_sum_saldos += valor
 
@@ -90,46 +92,45 @@ print(f"Saldo promedio diario: {saldo_promedio_diario}")
 
 
 # ----- INPC -----------------
-sql = 'SELECT inpc_inicial FROM inpc'
-cursor.execute(sql)
+SQL = 'SELECT inpc_inicial FROM inpc'
+cursor.execute(SQL)
 results = cursor.fetchall()
 
 value_init = 0
 for tupla in results:
-    value_init = tupla[0]  
+    value_init = tupla[0]
 
 print(f"\nEl INPC de inicio de inversion es: {value_init}")
 
 
-sql = 'SELECT inpc_final FROM inpc'
-cursor.execute(sql)
+SQL = 'SELECT inpc_final FROM inpc'
+cursor.execute(SQL)
 results = cursor.fetchall()
 
 value_end = 0
 for tupla in results:
-    value_end = tupla[0]  
+    value_end = tupla[0]
 
 print(f"El INPC de final de inversion es: {value_end}")
 
 
 # Factor de inflacion
-inflation_factor = ((value_end / value_init) - 1)
+inflation_factor = (value_end / value_init) - 1
 inflation_factor_round = round(inflation_factor, 4)
 print(f"\nEl factor de inflacion es: {inflation_factor_round}")
 
-
 # Ajuste por Inflacion = Factor de Inflacion * saldo promedio diario
 inflation_adjustment = round((inflation_factor_round * saldo_promedio_diario), 3)
-
 print(f"Ajuste por inflacion: {inflation_adjustment}")
 
 # Interes Real
 interes_real = total_sum_interes - inflation_adjustment
 print(f"Interes Real: {interes_real}")
 
-# CALCULO ISR SEMESTRAL
+# ----- CALCULO ISR SEMESTRAL ------------------
 
-# Limite inferior = obtener del diario oficial (en pagina del sat) = (=0.01) -- pag 15 de RESOLUCIÓN Miscelánea Fiscal para 2023
+# Limite inferior = obtener del diario oficial (en pagina del sat) = (=0.01)
+# --Revisar pag 15 de RESOLUCIÓN Miscelánea Fiscal para 2023
 lower_limit = Decimal(.01)
 
 # Excedente sobre limite inferior = interes real - limite inferior
@@ -151,5 +152,3 @@ print(f"ISR a cargo: {isr_paid}")
 
 
 database.close()
-
-
