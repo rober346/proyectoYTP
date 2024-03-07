@@ -1,0 +1,60 @@
+--------- SEMESTRAL ----------
+
+---------------------------------------------
+X CADA MES:
+Fondos agregados (abono) -- ok
+Comisiones (en negativo) -- ok
+Pago (Interes Nominal, un dato general) -- ok
+Retiro (en negativo) -- ok
+---------------------------------------------
+
+Saldo diario = Abono + Interes nominal + Comisiones + Retiro -- pendiente
+Saldo diario (acumulado para todos los dias) = saldo del dia anterior (A+I+C+R) + saldo del dia actual -- pendiente
+
+suma total de abonos -- ok
+suma total de las Comisiones -- ok
+suma total de interes nominal -- pendiente *** <--- DATO PARA DECLARACION
+suma total de retiros -- ok
+saldo promedio diario (final) = promedio de los saldos diarios del semestre -- pendiente ***
+
+--------------------------------------------------------------------------------
+** AJUSTE POR INFLACION **
+
+suma total de Interes Nominal -- ok
+INPC de incio de inversion -- ok
+INPC de final de inversion -- ok
+
+formula:
+FACTOR DE INFLACION = ( INPC mas reciente / INPC  del primer periodo ) - 1 -- ok
+
+siendo este caso:
+FACTOR DE INFLACION = ( INPC de final de inversion / INPC de incio de inversion ) - 1
+(poner de 4 decimales)
+
+SALDO PROMEDIO DIARIO (final) -- pendiente ***
+
+Ajuste por inflacion = factor de inflacion * saldo promedio diario -- pendiente 
+INTERES REAL = interes nominal - ajuste por inflacion -- pendiente
+--------------------------------------------------------------------------------
+
+** CALCULO ISR SEMESTRAL ** -- pendiente
+
+INTERES REAL 
+LIMITE INFERIOR = obtener del diario oficial (en pagina del sat) = (=0.01) -- pag 15 de RESOLUCIÓN Miscelánea Fiscal para 2023
+Excedente sobre limite inferior = interes real - limite inferior -- pendiente
+Tasa (% para aplicarse sobre el excedente del límite inferior) =  obtener del diario oficial (en pagina del sat) = (1.92)
+Impuesto Marginal = excedente limite inferior * Tasa
+cuota fija = obtener del diario oficial (en pagina del sat) = (0.00)
+ISR a cargo = Impuesto Marginal + cuota fija -- pendiente
+
+
+------------------------------------
+- DATOS PARA DECLARACION SEMESTRAL -
+------------------------------------
+
+suma total de interes nominal
+Deducciones autoricadas = Interes nominal - interes real
+Base gravable del pago provisional = interes real
+Impuesto conforme a tarifa = ISR a cargo
+nota: Resto de casillas va en cero, siguiente y enviar ....
+
